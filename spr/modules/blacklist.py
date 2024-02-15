@@ -10,10 +10,10 @@ from spr.utils.db import (add_chat, add_user, blacklist_chat,
 
 
 @spr.on_message(
-    filters.command("blacklist") & filters.user(SUDOERS), group=3
+    filters.command("blacklist, AntiGikes") & filters.user(SUDOERS), group=3
 )
 async def blacklist_func(_, message: Message):
-    err = "Enter a user/chat's id and give a reason."
+    err = "Masukkan id pengguna/obrolan dan berikan alasannya."
     if len(message.command) < 3:
         return await message.reply_text(err)
     id = message.text.split(None, 2)[1]
@@ -38,7 +38,7 @@ async def blacklist_func(_, message: Message):
             add_chat(id)
         if is_chat_blacklisted(id):
             return await message.reply_text(
-                "This chat is already blacklisted."
+                "Obrolan ini sudah masuk daftar anti gikes dan daftar hitam."
             )
         blacklist_chat(id, reason)
         await message.reply_text(f"Blacklisted chat {chat.title}")
@@ -47,7 +47,7 @@ async def blacklist_func(_, message: Message):
 
     if id in SUDOERS:
         return await message.reply_text(
-            "This user is in SUDOERS and cannot be blacklisted."
+            "Pengguna ini ada di SUDOERS dan tidak dapat dimasukkan dalam daftar hitam atau anti gikes."
         )
     try:
         user = await spr.get_users(id)
@@ -58,7 +58,7 @@ async def blacklist_func(_, message: Message):
         add_user(id)
     if is_user_blacklisted(id):
         return await message.reply_text(
-            "This user is already blacklisted."
+            "Pengguna ini sudah masuk daftar hitam."
         )
     blacklist_user(id, reason)
     await message.reply_text(f"Blacklisted user {user.mention}")
@@ -70,7 +70,7 @@ async def blacklist_func(_, message: Message):
     filters.command("whitelist") & filters.user(SUDOERS), group=3
 )
 async def whitelist_func(_, message: Message):
-    err = "Enter a user/chat's id."
+    err = "Masukkan id pengguna/obrolan."
     if len(message.command) != 2:
         return await message.reply_text(err)
     id = message.text.split(None, 1)[1]
@@ -90,7 +90,7 @@ async def whitelist_func(_, message: Message):
             add_chat(id)
         if not is_chat_blacklisted(id):
             return await message.reply_text(
-                "This chat is already whitelisted."
+                "Obrolan ini sudah masuk daftar putih."
             )
         whitelist_chat(id)
         return await message.reply_text(f"Whitelisted {chat.title}")
@@ -104,7 +104,7 @@ async def whitelist_func(_, message: Message):
         add_user(id)
     if not is_user_blacklisted(id):
         return await message.reply_text(
-            "This user is already whitelisted."
+            "Pengguna ini sudah masuk daftar putih."
         )
     whitelist_user(id)
     return await message.reply_text(f"Whitelisted {user.mention}")
