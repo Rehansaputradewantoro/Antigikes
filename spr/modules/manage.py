@@ -56,7 +56,7 @@ async def nsfw_toggle_func(_, message: Message):
 
 
 @spr.on_message(
-    filters.command("anti_spam, AntiGikes") & ~filters.private, group=3
+    filters.command("anti_spam, Anti_Gikes") & ~filters.private, group=3
 )
 async def spam_toggle_func(_, message: Message):
     if len(message.command) != 2:
