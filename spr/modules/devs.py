@@ -21,7 +21,7 @@ __HELP__ = """
 /eval - Execute python code.
 /sh - Execute shell code.
 
-/blacklist, Anti Gikes [CHAT_ID|USER_ID] - Blacklist a chat/user.
+/blacklist, /Anti_Gikes [CHAT_ID|USER_ID] - Blacklist a chat/user.
 /whitelist [CHAT_ID|USER_ID] - Whitelist a chat/user.
 """
 
