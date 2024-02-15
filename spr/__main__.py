@@ -50,7 +50,7 @@ async def help_command(_, message: Message):
         return await message.reply("Kirimkan Saya Untuk Bantuan", reply_markup=kb)
     kb = ikb(
         {
-            "Help": "Tombol bot",
+            "Help": "Bot_commands",
             "Channels": "https://t.me/Revanstoreya",
             "Add Me To Your Group": f"https://t.me/{BOT_USERNAME}?startgroup=new",
             "Support Chat (for now)": "https://t.me/ZoneDangerSex",
