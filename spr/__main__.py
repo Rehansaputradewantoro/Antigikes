@@ -47,20 +47,20 @@ async def main():
 async def help_command(_, message: Message):
     if message.chat.type != ChatType.PRIVATE:
         kb = ikb({"Help": f"https://t.me/{BOT_USERNAME}?start=help"})
-        return await message.reply("Pm Me For Help", reply_markup=kb)
+        return await message.reply("Kirimkan Saya Untuk Bantuan", reply_markup=kb)
     kb = ikb(
         {
-            "Help": "bot_commands",
-            "Repo": "https://github.com/TheHamkerCat/SpamProtectionRobot",
+            "Help": "Tombol bot",
+            "Channels": "https://t.me/Revanstoreya",
             "Add Me To Your Group": f"https://t.me/{BOT_USERNAME}?startgroup=new",
-            "Support Chat (for now)": "https://t.me/WBBSupport",
+            "Support Chat (for now)": "https://t.me/ZoneDangerSex",
         }
     )
     mention = message.from_user.mention
     await message.reply_photo(
         "https://hamker.me/logo_3.png",
-        caption=f"Hi {mention}, I'm SpamProtectionRobot,"
-        + " Choose An Option From Below.",
+        caption=f"Hi {mention}, Aku Adalah Robot Pelindung Spam Gikes,"
+        + " Pilih Opsi Dari Bawah.",
         reply_markup=kb,
     )
 
@@ -85,9 +85,9 @@ async def help_parser(name, keyboard=None):
             paginate_modules(0, HELPABLE, "help")
         )
     return (
-        f"Hello {name}, I'm SpamProtectionRobot, I can protect "
-        + "your group from Spam and NSFW media using "
-        + "machine learning. Choose an option from below.",
+        f"Hello {name} Aku Adalah Robot Pelindung Spam Gikes "
+        + "grup Anda dari media Spam Gikes dan NSFW menggunakan "
+        + "pembelajaran mesin.  Pilih opsi dari bawah.",
         keyboard,
     )
 
@@ -101,15 +101,15 @@ async def help_button(client, query: CallbackQuery):
     create_match = re.match(r"help_create", query.data)
     u = query.from_user.mention
     top_text = (
-        f"Hello {u}, I'm SpamProtectionRobot, I can protect "
-        + "your group from Spam and NSFW media using "
-        + "machine learning. Choose an option from below."
+        f"Hello {u}, Aku Adalah Robot Pelondung Ancaman Spam Gikes "
+        + "grup Anda dari media Spam Gikes dan NSFW menggunakan "
+        + "pembelajaran mesin.  Pilih opsi dari bawah."
     )
     if mod_match:
         module = mod_match.group(1)
         text = (
             "{} **{}**:\n".format(
-                "Here is the help for", HELPABLE[module].__MODULE__
+                "Berikut ini bantuan untuk", HELPABLE[module].__MODULE__
             )
             + HELPABLE[module].__HELP__
         )
@@ -120,7 +120,7 @@ async def help_button(client, query: CallbackQuery):
                 [
                     [
                         InlineKeyboardButton(
-                            "back", callback_data="help_back"
+                            "kembali", callback_data="help_back"
                         )
                     ]
                 ]
@@ -170,7 +170,7 @@ async def help_button(client, query: CallbackQuery):
 
 @spr.on_message(filters.command("runs"), group=3)
 async def runs_func(_, message: Message):
-    await message.reply("What am i? Rose?")
+    await message.reply("Aku ini apa?  Mawar?")
 
 
 if __name__ == "__main__":
