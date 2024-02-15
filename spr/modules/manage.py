@@ -12,10 +12,10 @@ from spr.utils.misc import admins, get_file_id
 __MODULE__ = "Manage"
 __HELP__ = """
 /anti_nsfw [ENABLE|DISABLE] - Enable or disable NSFW Detection.
-/anti_spam [ENABLE|DISABLE] - Enable or disable Spam Detection.
+/anti_spam, Anti Gikes [ENABLE|DISABLE, On|Off] - Enable or disable Spam Detection, Anti Gikes On or Off.
 
 /nsfw_scan - Classify a media.
-/spam_scan - Get Spam predictions of replied message.
+/spam_scan - Dapatkan prediksi Spam Gikes dari pesan balasan.
 """
 
 
@@ -25,7 +25,7 @@ __HELP__ = """
 async def nsfw_toggle_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "Usage: /anti_nsfw [ENABLE|DISABLE]"
+            "Usage: /anti_nsfw [ENABLE|DISABLE], [On|Off]"
         )
     if message.from_user:
         user = message.from_user
@@ -41,14 +41,14 @@ async def nsfw_toggle_func(_, message: Message):
     chat_id = message.chat.id
     if status == "enable":
         if is_nsfw_enabled(chat_id):
-            return await message.reply("Already enabled.")
+            return await message.reply("Already enabled, On.")
         enable_nsfw(chat_id)
-        await message.reply_text("Enabled NSFW Detection.")
+        await message.reply_text("Enabled NSFW Detection, Terdeteksi NSFW On.")
     elif status == "disable":
         if not is_nsfw_enabled(chat_id):
-            return await message.reply("Already disabled.")
+            return await message.reply("Already disabled, Off.")
         disable_nsfw(chat_id)
-        await message.reply_text("Disabled NSFW Detection.")
+        await message.reply_text("Disabled NSFW Detection. Terdeteksi NSFW Off")
     else:
         await message.reply_text(
             "Unknown Suffix, Use /anti_nsfw [ENABLE|DISABLE]"
@@ -56,12 +56,12 @@ async def nsfw_toggle_func(_, message: Message):
 
 
 @spr.on_message(
-    filters.command("anti_spam") & ~filters.private, group=3
+    filters.command("anti_spam, AntiGikes") & ~filters.private, group=3
 )
 async def spam_toggle_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "Usage: /anti_spam [ENABLE|DISABLE]"
+            "Usage: /anti_spam [ENABLE|DISABLE], /AntiGikes [On|Off"
         )
     if message.from_user:
         user = message.from_user
@@ -70,30 +70,30 @@ async def spam_toggle_func(_, message: Message):
             await admins(chat_id)
         ):
             return await message.reply_text(
-                "You don't have enough permissions"
+                "Anda tidak memiliki cukup izin"
             )
     status = message.text.split(None, 1)[1].strip()
     status = status.lower()
     chat_id = message.chat.id
-    if status == "enable":
+    if status == "enable, On":
         if is_spam_enabled(chat_id):
-            return await message.reply("Already enabled.")
+            return await message.reply("Sudah diaktifkan, On.")
         enable_spam(chat_id)
-        await message.reply_text("Enabled Spam Detection.")
-    elif status == "disable":
+        await message.reply_text("Deteksi Spam Gikes Diaktifkan.")
+    elif status == "disable, Off":
         if not is_spam_enabled(chat_id):
-            return await message.reply("Already disabled.")
+            return await message.reply("Sudah Dimatikan, Off.")
         disable_spam(chat_id)
-        await message.reply_text("Disabled Spam Detection.")
+        await message.reply_text("Deteksi Spam Gikes Dinonaktifkan.")
     else:
         await message.reply_text(
-            "Unknown Suffix, Use /anti_spam [ENABLE|DISABLE]"
+            "Akhiran Tidak Diketahui, Gunakan /anti_spam or /AntiGikes [On|Off] [ENABLE|DISABLE]"
         )
 
 
 @spr.on_message(filters.command("nsfw_scan"), group=3)
 async def nsfw_scan_command(_, message: Message):
-    err = "Reply to an image/document/sticker/animation to scan it."
+    err = "Membalas gambar/dokumen/stiker/animasi untuk memindainya."
     if not message.reply_to_message:
         await message.reply_text(err)
         return
@@ -110,7 +110,7 @@ async def nsfw_scan_command(_, message: Message):
     m = await message.reply_text("Scanning")
     file_id = get_file_id(reply)
     if not file_id:
-        return await m.edit("Something went wrong.")
+        return await m.edit("Ada yang salah.")
     file = await spr.download_media(file_id)
     try:
         results = await arq.nsfw_scan(file=file)
@@ -135,7 +135,7 @@ async def nsfw_scan_command(_, message: Message):
 @spr.on_message(filters.command("spam_scan"), group=3)
 async def scanNLP(_, message: Message):
     if not message.reply_to_message:
-        return await message.reply("Reply to a message to scan it.")
+        return await message.reply("Balas pesan untuk memindainya.")
     r = message.reply_to_message
     text = r.text or r.caption
     if not text:
