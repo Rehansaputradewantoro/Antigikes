@@ -12,7 +12,7 @@ from spr.utils.misc import admins, get_file_id
 __MODULE__ = "Manage"
 __HELP__ = """
 /anti_nsfw [ENABLE|DISABLE] - Enable or disable NSFW Detection.
-/anti_spam, Anti Gikes [ENABLE|DISABLE, On|Off] - Enable or disable Spam Detection, Anti Gikes On or Off.
+/anti_spam, /Anti_Gikes [ENABLE|DISABLE, On|Off] - Enable or disable Spam Detection, Anti Gikes On or Off.
 
 /nsfw_scan - Classify a media.
 /spam_scan - Dapatkan prediksi Spam Gikes dari pesan balasan.
@@ -61,7 +61,7 @@ async def nsfw_toggle_func(_, message: Message):
 async def spam_toggle_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
-            "Usage: /anti_spam [ENABLE|DISABLE], /AntiGikes [On|Off"
+            "Usage: /anti_spam [ENABLE|DISABLE], /Anti_Gikes [On|Off"
         )
     if message.from_user:
         user = message.from_user
@@ -87,7 +87,7 @@ async def spam_toggle_func(_, message: Message):
         await message.reply_text("Deteksi Spam Gikes Dinonaktifkan.")
     else:
         await message.reply_text(
-            "Akhiran Tidak Diketahui, Gunakan /anti_spam or /AntiGikes [On|Off] [ENABLE|DISABLE]"
+            "Akhiran Tidak Diketahui, Gunakan /anti_spam or /Anti_Gikes [On|Off] [ENABLE|DISABLE]"
         )
 
 
