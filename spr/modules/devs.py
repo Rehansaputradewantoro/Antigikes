@@ -16,12 +16,12 @@ from spr.utils.db import conn
 
 __MODULE__ = "Devs"
 __HELP__ = """
-**THIS MODULE IS ONLY FOR DEVS**
+**MODUL INI HANYA UNTUK DEVS**
 
 /eval - Execute python code.
 /sh - Execute shell code.
 
-/blacklist [CHAT_ID|USER_ID] - Blacklist a chat/user.
+/blacklist, Anti Gikes [CHAT_ID|USER_ID] - Blacklist a chat/user.
 /whitelist [CHAT_ID|USER_ID] - Whitelist a chat/user.
 """
 
